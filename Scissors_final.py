@@ -1,5 +1,6 @@
 import random
 import os
+import requests as requests
 print("Scissor")
 print("Rock")
 print("Paper")
@@ -111,6 +112,31 @@ while state:
 
         state = weiterspielen()
 
+
 writefile(final_write)
+
+
+def api_aufruf(username, anz_scheren, anz_stein, anz_papier, anz_lizard, anz_spock, apiIP="http://127.0.0.1:5000"):
+    url = apiIP + "/v1/updateRecord"
+    url += "?username=" + str(username) + "&voteScissors=" + str(anz_scheren) + "&voteRock=" + str(anz_stein) + "&votePaper=" +\
+           str(anz_papier) + "&voteSpock=" + str(anz_spock) + \
+        "&voteLizard=" + str(anz_lizard)
+    responseCode = 0
+    try:
+        response = requests.post(url, None)
+        responseCode = response.status_code
+    except:
+        return 0
+    return responseCode
+
+
+api_aufruf("RimmlSebastian", final_write["Scissor"], final_write["Rock"], final_write["Paper"], final_write["lizard"],
+           final_write["spock"])
+
 os.startfile("Ergebnisse.txt")
+
+
 # es werd in der eltern klasse ein object erzeugt auf dieses referenziert super()
+# Was ist static
+# Wie wird es in python verwendet
+# ohne self statische Methode
